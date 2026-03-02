@@ -5,7 +5,7 @@ full_description = 'This framework allows for modular UI elements using a Manage
 
 -- Look for files in the current directory and subdirectories
 file = {
-    'lib/manager.lua',
+    'lib/gui/manager.lua',
     'lib/gui/elements'
 }
 
