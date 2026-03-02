@@ -1,10 +1,3 @@
---- NexusUI Showcase Gallery
--- A comprehensive demonstration of all UI components.
--- @script test2.lua
-
--- @section Setup
--- Initializing the Manager and peripheral detection.
-
 local GUI = require("lib.gui.manager")
 local mon = peripheral.find("monitor") or term.current()
 
@@ -12,8 +5,6 @@ local frames = {}
 local fw, fh = 26, 13
 local pad = 1
 
---- Helper to make a frame at a grid position.
--- @internal
 local function makeFrame(col, row, title)
     local f = GUI.newFrame({
         x = (col-1)*(fw+pad)+2, y = (row-1)*(fh+pad)+2,
@@ -24,9 +15,6 @@ local function makeFrame(col, row, title)
     return f
 end
 
--- @section Labels
--- Demonstrating justified text and vertical alignment.
-
 -- FRAME 1: Text Alignments
 local f1 = makeFrame(1, 1, "Label Alignments")
 f1:addChild(GUI.newLabel({
@@ -35,9 +23,6 @@ f1:addChild(GUI.newLabel({
     align = "justify", vAlign = "middle",
     bg = colours.black, fg = colours.yellow, mon = f1.window
 }))
-
--- @section Buttons
--- Interactive elements with state-based color changes and callback actions.
 
 -- FRAME 2: Interactive Buttons
 local f2 = makeFrame(2, 1, "Buttons")
@@ -55,9 +40,6 @@ f2:addChild(GUI.newButton({
     mon = f2.window
 }))
 
--- @section Inputs
--- Text entry components supporting placeholders and password masking.
-
 -- FRAME 3: Input Fields
 local f3 = makeFrame(3, 1, "Inputs")
 f3:addChild(GUI.newInput({
@@ -66,9 +48,6 @@ f3:addChild(GUI.newInput({
 f3:addChild(GUI.newInput({
     x = 2, y = 7, w = fw-4, masked = true, placeholder = "Password", mon = f3.window
 }))
-
--- @section Dropdowns
--- Expandable menus for choosing from a list of options.
 
 -- FRAME 4: Dropdowns
 local f4 = makeFrame(1, 2, "Selection")
@@ -79,9 +58,6 @@ f4:addChild(GUI.newDropdown({
     mon = f4.window
 }))
 
--- @section ProgressBars
--- Horizontal and vertical bars for visualizing percentages.
-
 -- FRAME 5: Progress Bars
 local f5 = makeFrame(2, 2, "Progress")
 local pb = f5:addChild(GUI.newProgressBar({
@@ -91,13 +67,16 @@ local pbVert = f5:addChild(GUI.newProgressBar({
     x = 2, y = 7, w = 4, h = 4, value = 75, direction = "vertical", flipped = true, mon = f5.window
 }))
 
--- @section MainLoop
--- The core `onUpdate` loop used to animate UI elements in real-time.
+-- FRAME 6: Dynamic Updates
+local f6 = makeFrame(3, 2, "System Info")
+local timeLbl = f6:addChild(GUI.newLabel({x=2, y=5, w=fw-4, align="center", text="00:00", mon=f6.window}))
 
+-- Init and Loop
 GUI.init({
     scale = 0.5,
     frames = frames,
     onUpdate = function()
+        timeLbl:setText(textutils.formatTime(os.time(), true))
         pb.value = (pb.value + 1) % 100
         pbVert.value = (pb.value + 1) % 100
     end
