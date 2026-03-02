@@ -1,6 +1,7 @@
+--- Input UI Element.
+-- @module Input
 local GUI = ...
 
----@class Input : UIElement
 local Input = setmetatable({}, GUI.UIElement)
 Input.__index = Input
 

@@ -1,43 +1,41 @@
--- The name of your project (appears at the top of the sidebar)
+-- Project Metadata
 project = 'CC:Tweaked UI Framework'
-
--- The title of the browser tab
 title = 'NexusUI Documentation'
-
--- Brief descriptions for the home page
 description = 'A modular GUI library for ComputerCraft'
 full_description = 'A modular UI elements system using a Manager-Registry pattern for CC:Tweaked.'
 
--- MANUAL TOPICS
--- This tells LDoc to look for Markdown files to create "Custom Pages"
--- We use this for your Gallery/Example segments.
+-- Documentation Sources
+-- 1. Topics: These are manual Markdown files (Your segmented Gallery)
 topics = {
     'examples.md'
 }
 
--- SOURCE FILES
--- This tells LDoc which Lua files to scan for @module and @class tags.
+-- 2. File: These are the Lua source files to be scanned for API documentation
 file = {
     'lib/gui/manager.lua',
-    'lib/gui/elements' -- This scans the entire folder
+    'lib/gui/elements'
 }
 
--- SIDEBAR CATEGORIES
--- This renames the default labels in the sidebar to be more professional.
+-- Sidebar Customization
+-- Renames the default categories to be more user-friendly
 kind_names = {
-    topic = "Gallery",        -- Renames "Topics" to "Gallery"
-    module = "API Reference"  -- Renames "Modules" to "API Reference"
+    topic = "Gallery",
+    module = "API Reference"
 }
 
--- OUTPUT SETTINGS
-dir = 'doc'               -- The folder where the website is generated
-format = 'discount'       -- Enables Markdown support in your comments
-backtick_references = true -- Allows `Manager` to become a clickable link
-sort = true                -- Sorts functions alphabetically
+-- Output Settings
+dir = 'doc'                -- The output directory for generated HTML
+format = 'discount'        -- Enables Markdown parsing in comments
+backtick_references = true -- Automatically links `Names` to their documentation
+sort = true                -- Sorts functions and modules alphabetically
 
--- CUSTOM TAGS
--- This handles the @internal and @gui tags we added to your code
+-- Custom Tag Handling
+-- These hide the @gui and @internal tags from the final output while still processing them
 custom_tags = {
     {'gui', hidden = true},
     {'internal', hidden = true}
 }
+
+-- Visual Tweaks
+no_return_or_parms = false -- Ensure parameters and return values are shown
+no_summary = false         -- Show the summary table at the top of pages

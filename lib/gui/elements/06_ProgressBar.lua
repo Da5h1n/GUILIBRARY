@@ -1,3 +1,5 @@
+--- ProgressBar UI Element.
+-- @module ProgressBar
 local GUI = ...
 
 local ProgressBar = setmetatable({}, GUI.UIElement)

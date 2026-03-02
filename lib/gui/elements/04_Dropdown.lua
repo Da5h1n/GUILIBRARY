@@ -1,6 +1,8 @@
+--- Dropdown UI Element.
+-- @module Dropdown
 local GUI = ...
 
----@class Dropdown : UIElement
+
 local Dropdown = setmetatable({}, GUI.UIElement)
 Dropdown.__index = Dropdown
 

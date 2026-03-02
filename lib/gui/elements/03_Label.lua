@@ -1,6 +1,8 @@
+--- Label UI Element.
+-- @module Label
 local GUI = ...
 
----@class Label : UIElement
+
 local Label = setmetatable({}, GUI.UIElement)
 Label.__index = Label
 
