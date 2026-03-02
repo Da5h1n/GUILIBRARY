@@ -1,11 +1,13 @@
---- Label UI Element.
+--- Text display element with support for wrapping and complex alignment.
 -- @module Label
 local GUI = ...
 
-
+--- @class Label
 local Label = setmetatable({}, GUI.UIElement)
 Label.__index = Label
 
+--- Creates a new Label instance.
+-- @tparam table opts Options include align (left, center, right, justify) and vAlign (top, middle, bottom).
 function Label:new(opts)
     local self = GUI.UIElement.new(self, opts)
     self.text = opts.text or ""
@@ -14,6 +16,8 @@ function Label:new(opts)
     return self
 end
 
+--- Updates the label text and re-renders.
+-- @tparam string text The new string to display.
 function Label:setText(text)
     self.text = tostring(text or "")
     self:render()

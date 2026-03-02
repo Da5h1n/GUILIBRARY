@@ -1,11 +1,13 @@
---- Dropdown UI Element.
+--- Expandable selection menu for choosing from a list of options.
 -- @module Dropdown
 local GUI = ...
 
-
+--- @class Dropdown
 local Dropdown = setmetatable({}, GUI.UIElement)
 Dropdown.__index = Dropdown
 
+--- Creates a new Dropdown instance.
+-- @tparam table opts Options include options (table), selected (index), and onSelect (callback).
 function Dropdown:new(opts)
     local self = GUI.UIElement.new(self, opts)
     self.options = opts.options or {}
@@ -58,12 +60,10 @@ function Dropdown:render()
 end
 
 function Dropdown:click(x, y)
-    -- Clicked the header?
     if y == self.y then
         self.isOpen = not self.isOpen
         self.h = self.isOpen and self.expandedH or self.closedH
     elseif self.isOpen then
-        -- Clicked an option?
         local index = y - self.y
         if self.options[index] then
             self.selected = index
@@ -72,7 +72,6 @@ function Dropdown:click(x, y)
             self.onSelect(self.options[index], index)
         end
     end
-    -- Trigger a re-render of the parent frame to clear the old list area
     if self.parentFrame then self.parentFrame:render(true) else self:render() end
 end
 

@@ -1,10 +1,13 @@
---- ProgressBar UI Element.
+--- Visual bar for displaying percentage values with multiple orientations.
 -- @module ProgressBar
 local GUI = ...
 
+--- @class ProgressBar
 local ProgressBar = setmetatable({}, GUI.UIElement)
 ProgressBar.__index = ProgressBar
 
+--- Creates a new ProgressBar instance.
+-- @tparam table opts Options include value (0-100), barColour, direction (horizontal/vertical), and flipped.
 function ProgressBar:new(opts)
     local self = GUI.UIElement.new(self, opts)
 
@@ -91,6 +94,8 @@ function ProgressBar:render()
     end
 end
 
+--- Updates the bar value and re-renders.
+-- @tparam number val Percentage value (0-100).
 function ProgressBar:setValue(val)
     local newValue = math.floor(math.max(0, math.min(100, val)))
     if newValue ~= self.value then

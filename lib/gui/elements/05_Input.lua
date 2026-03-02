@@ -1,10 +1,13 @@
---- Input UI Element.
+--- Text input field for user entry with focus and masking support.
 -- @module Input
 local GUI = ...
 
+--- @class Input
 local Input = setmetatable({}, GUI.UIElement)
 Input.__index = Input
 
+--- Creates a new Input field instance.
+-- @tparam table opts Options include placeholder, maxLen, masked, and maskChar.
 function Input:new(opts)
     local self = GUI.UIElement.new(self, opts)
 
@@ -78,6 +81,8 @@ function Input:render()
     end
 end
 
+--- Internal update loop for handling cursor blinking.
+-- @internal
 function Input:update()
     if self.focused then
         if os.clock() - self.cursorTimer > 0.5 then
@@ -106,6 +111,8 @@ function Input:click(x, y)
     self:render()
 end
 
+--- Captures focus and handles character/key events.
+-- @tparam table event The ComputerCraft event table.
 function Input:onType(event)
     local e = event[1]
 
