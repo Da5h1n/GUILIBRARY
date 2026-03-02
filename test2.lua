@@ -3,6 +3,8 @@
 -- @script test2.lua
 
 -- @section Setup
+-- Initializing the Manager and peripheral detection.
+
 local GUI = require("lib.gui.manager")
 local mon = peripheral.find("monitor") or term.current()
 
@@ -10,7 +12,7 @@ local frames = {}
 local fw, fh = 26, 13
 local pad = 1
 
---- Helper to make a frame at a grid position
+--- Helper to make a frame at a grid position.
 -- @internal
 local function makeFrame(col, row, title)
     local f = GUI.newFrame({
@@ -23,6 +25,8 @@ local function makeFrame(col, row, title)
 end
 
 -- @section Labels
+-- Demonstrating justified text and vertical alignment.
+
 -- FRAME 1: Text Alignments
 local f1 = makeFrame(1, 1, "Label Alignments")
 f1:addChild(GUI.newLabel({
@@ -33,6 +37,8 @@ f1:addChild(GUI.newLabel({
 }))
 
 -- @section Buttons
+-- Interactive elements with state-based color changes and callback actions.
+
 -- FRAME 2: Interactive Buttons
 local f2 = makeFrame(2, 1, "Buttons")
 local btnStatus = "Waiting..."
@@ -50,6 +56,8 @@ f2:addChild(GUI.newButton({
 }))
 
 -- @section Inputs
+-- Text entry components supporting placeholders and password masking.
+
 -- FRAME 3: Input Fields
 local f3 = makeFrame(3, 1, "Inputs")
 f3:addChild(GUI.newInput({
@@ -60,6 +68,8 @@ f3:addChild(GUI.newInput({
 }))
 
 -- @section Dropdowns
+-- Expandable menus for choosing from a list of options.
+
 -- FRAME 4: Dropdowns
 local f4 = makeFrame(1, 2, "Selection")
 f4:addChild(GUI.newDropdown({
@@ -70,6 +80,8 @@ f4:addChild(GUI.newDropdown({
 }))
 
 -- @section ProgressBars
+-- Horizontal and vertical bars for visualizing percentages.
+
 -- FRAME 5: Progress Bars
 local f5 = makeFrame(2, 2, "Progress")
 local pb = f5:addChild(GUI.newProgressBar({
@@ -80,7 +92,8 @@ local pbVert = f5:addChild(GUI.newProgressBar({
 }))
 
 -- @section MainLoop
--- Init and Loop
+-- The core `onUpdate` loop used to animate UI elements in real-time.
+
 GUI.init({
     scale = 0.5,
     frames = frames,

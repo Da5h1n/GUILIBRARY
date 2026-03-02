@@ -1,9 +1,6 @@
 project = 'CC:Tweaked UI Framework'
-title = 'UI Framework Documentation'
+title = 'NexusUI Documentation'
 description = 'A modular GUI library for ComputerCraft'
-full_description = 'This framework allows for modular UI elements using a Manager-Registry system.'
-
-examples = {'test2.lua'}
 
 file = {
     'lib/gui/manager.lua',
@@ -11,11 +8,16 @@ file = {
     'test2.lua'
 }
 
+-- This ensures your script sections show up in the navigation
+kind_names = {
+    script = "Examples",
+    module = "Core Library"
+}
+
 dir = 'doc'
 format = 'discount'
 backtick_references = true
 sort = true
-
 
 custom_tags = {
     {'gui', hidden = true},
