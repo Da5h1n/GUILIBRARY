@@ -7,7 +7,7 @@ examples = {'test2.lua'}
 
 file = {
     'lib/gui/manager.lua',
-    'lib/gui/elements'
+    'lib/gui/elements',
     'test2.lua'
 }
 
