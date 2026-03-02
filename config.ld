@@ -3,6 +3,8 @@ title = 'UI Framework Documentation'
 description = 'A modular GUI library for ComputerCraft'
 full_description = 'This framework allows for modular UI elements using a Manager-Registry system.'
 
+package = 'lib.gui'
+
 file = {
     'lib/gui/manager.lua',
     'lib/gui/elements'

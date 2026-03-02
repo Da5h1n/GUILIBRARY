@@ -1,8 +1,8 @@
+--- A bordered container that manages sub-windows and child elements.
+-- Frames act as local coordinate systems for the elements inside them.
+-- @module Frame
 local GUI = ...
 
---- A container element that provides a bordered area and a sub-window for child elements.
---- Frames act as local coordinate systems for the elements inside them.
---- @classmod Frame
 local Frame = setmetatable({}, GUI.UIElement)
 Frame.__index = Frame
 
