@@ -50,17 +50,15 @@
 
     <h2>test2.lua</h2>
 <pre>
-<span class="comment">--- A comprehensive showcase of the NexusUI framework.
-</span><span class="comment">-- This script demonstrates a 3x2 grid of frames featuring every available
-</span><span class="comment">-- element: Labels with complex alignment, interactive Buttons, Input fields,
-</span><span class="comment">-- Dropdowns, and Progress Bars with dynamic updates.
-</span><span class="comment">-- @example test2.lua
+<span class="comment">--- NexusUI Showcase Gallery
+</span><span class="comment">-- A comprehensive demonstration of all UI components.
+</span><span class="comment">-- @script test2.lua
 </span>
-<span class="keyword">local</span> GUI = <span class="global">require</span>(<span class="string">"lib.gui.manager"</span>)
+<span class="comment">-- @section Setup
+</span><span class="keyword">local</span> GUI = <span class="global">require</span>(<span class="string">"lib.gui.manager"</span>)
 <span class="keyword">local</span> mon = peripheral.<span class="function-name">find</span>(<span class="string">"monitor"</span>) <span class="keyword">or</span> term.<span class="function-name">current</span>()
 
-<span class="comment">-- 1. Create a set of Frames
-</span><span class="keyword">local</span> frames = {}
+<span class="keyword">local</span> frames = {}
 <span class="keyword">local</span> fw, fh = <span class="number">26</span>, <span class="number">13</span>
 <span class="keyword">local</span> pad = <span class="number">1</span>
 
@@ -76,7 +74,8 @@
     <span class="keyword">return</span> f
 <span class="keyword">end</span>
 
-<span class="comment">-- FRAME 1: Text Alignments
+<span class="comment">-- @section Labels
+</span><span class="comment">-- FRAME 1: Text Alignments
 </span><span class="keyword">local</span> f1 = <span class="function-name">makeFrame</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="string">"Label Alignments"</span>)
 f1:<span class="function-name">addChild</span>(GUI.<span class="function-name">newLabel</span>({
     x = <span class="number">2</span>, y = <span class="number">2</span>, w = fw-<span class="number">4</span>, h = fh-<span class="number">4</span>,
@@ -85,7 +84,8 @@ f1:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
     bg = colours.black, fg = colours.yellow, mon = f1.window
 }))
 
-<span class="comment">-- FRAME 2: Interactive Buttons
+<span class="comment">-- @section Buttons
+</span><span class="comment">-- FRAME 2: Interactive Buttons
 </span><span class="keyword">local</span> f2 = <span class="function-name">makeFrame</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="string">"Buttons"</span>)
 <span class="keyword">local</span> btnStatus = <span class="string">"Waiting..."</span>
 <span class="keyword">local</span> statusLbl = f2:<span class="function-name">addChild</span>(GUI.<span class="function-name">newLabel</span>({x=<span class="number">2</span>, y=<span class="number">8</span>, w=fw-<span class="number">4</span>, text=btnStatus, align=<span class="string">"center"</span>, mon=f2.window}))
@@ -101,7 +101,8 @@ f2:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
     mon = f2.window
 }))
 
-<span class="comment">-- FRAME 3: Input Fields
+<span class="comment">-- @section Inputs
+</span><span class="comment">-- FRAME 3: Input Fields
 </span><span class="keyword">local</span> f3 = <span class="function-name">makeFrame</span>(<span class="number">3</span>, <span class="number">1</span>, <span class="string">"Inputs"</span>)
 f3:<span class="function-name">addChild</span>(GUI.<span class="function-name">newInput</span>({
     x = <span class="number">2</span>, y = <span class="number">3</span>, w = fw-<span class="number">4</span>, placeholder = <span class="string">"Username"</span>, mon = f3.window
@@ -110,7 +111,8 @@ f3:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
     x = <span class="number">2</span>, y = <span class="number">7</span>, w = fw-<span class="number">4</span>, masked = <span class="keyword">true</span>, placeholder = <span class="string">"Password"</span>, mon = f3.window
 }))
 
-<span class="comment">-- FRAME 4: Dropdowns
+<span class="comment">-- @section Dropdowns
+</span><span class="comment">-- FRAME 4: Dropdowns
 </span><span class="keyword">local</span> f4 = <span class="function-name">makeFrame</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"Selection"</span>)
 f4:<span class="function-name">addChild</span>(GUI.<span class="function-name">newDropdown</span>({
     x = <span class="number">2</span>, y = <span class="number">3</span>, w = fw-<span class="number">4</span>,
@@ -119,7 +121,8 @@ f4:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
     mon = f4.window
 }))
 
-<span class="comment">-- FRAME 5: Progress Bars
+<span class="comment">-- @section ProgressBars
+</span><span class="comment">-- FRAME 5: Progress Bars
 </span><span class="keyword">local</span> f5 = <span class="function-name">makeFrame</span>(<span class="number">2</span>, <span class="number">2</span>, <span class="string">"Progress"</span>)
 <span class="keyword">local</span> pb = f5:<span class="function-name">addChild</span>(GUI.<span class="function-name">newProgressBar</span>({
     x = <span class="number">2</span>, y = <span class="number">3</span>, w = fw-<span class="number">4</span>, h = <span class="number">3</span>, value = <span class="number">0</span>, barColour = colours.green, mon = f5.window
@@ -128,19 +131,13 @@ f4:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
     x = <span class="number">2</span>, y = <span class="number">7</span>, w = <span class="number">4</span>, h = <span class="number">4</span>, value = <span class="number">75</span>, direction = <span class="string">"vertical"</span>, flipped = <span class="keyword">true</span>, mon = f5.window
 }))
 
-<span class="comment">-- FRAME 6: Dynamic Updates
-</span><span class="keyword">local</span> f6 = <span class="function-name">makeFrame</span>(<span class="number">3</span>, <span class="number">2</span>, <span class="string">"System Info"</span>)
-<span class="keyword">local</span> timeLbl = f6:<span class="function-name">addChild</span>(GUI.<span class="function-name">newLabel</span>({x=<span class="number">2</span>, y=<span class="number">5</span>, w=fw-<span class="number">4</span>, align=<span class="string">"center"</span>, text=<span class="string">"00:00"</span>, mon=f6.window}))
-
-<span class="comment">-- Init and Loop
+<span class="comment">-- @section MainLoop
+</span><span class="comment">-- Init and Loop
 </span>GUI.<span class="function-name">init</span>({
     scale = <span class="number">0.5</span>,
     frames = frames,
     onUpdate = <span class="keyword">function</span>()
-        <span class="comment">-- Update time
-</span>        timeLbl:<span class="function-name">setText</span>(textutils.<span class="function-name">formatTime</span>(<span class="global">os</span>.<span class="function-name">time</span>(), <span class="keyword">true</span>))
-        <span class="comment">-- Animate progress bar
-</span>        pb.value = (pb.value + <span class="number">1</span>) % <span class="number">100</span>
+        pb.value = (pb.value + <span class="number">1</span>) % <span class="number">100</span>
         pbVert.value = (pb.value + <span class="number">1</span>) % <span class="number">100</span>
     <span class="keyword">end</span>
 })</pre>
@@ -150,7 +147,7 @@ f4:<span class="function-name">addChild</span>(GUI.<span class="function-name">n
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2026-03-02 22:22:44 </i>
+<i style="float:right;">Last updated 2026-03-02 22:25:29 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
