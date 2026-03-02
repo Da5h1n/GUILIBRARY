@@ -1,8 +1,25 @@
+--- The core engine of the UI framework. Handles element registration, 
+-- event looping, and global focus management.
+-- @module Manager
 local Manager = {}
+
+--- The registry of all loaded UI classes.
+-- @table classes
 Manager.classes = {}
+
+--- Currently active and visible frames.
+-- @table activeFrames
 Manager.activeFrames = {}
+
+--- The element currently capturing keyboard input.
+-- @type UIElement
 Manager.focusedElement = nil
 
+
+--- Registers a new UI class and creates a shortcut constructor.
+-- For example, registering "Button" creates `Manager.newButton()`.
+-- @tparam string name The name of the class
+-- @tparam table classTable The table containing the class methods
 function Manager.register(name, classTable)
     Manager.classes[name] = classTable
     Manager["new" .. name] = function(opts)
@@ -10,10 +27,25 @@ function Manager.register(name, classTable)
     end
 end
 
----@class UIElement
+
+--- Base class for all UI components.
+-- @section UIElement
+
+--- The base UI element class that all components inherit from.
+-- @table UIElement
 Manager.UIElement = {}
 Manager.UIElement.__index = Manager.UIElement
 
+--- Constructor for the base UIElement.
+-- @tparam table opts Configuration options
+-- @tparam string opts.id Unique identifier for the element
+-- @tparam[opt=1] number opts.x X coordinate
+-- @tparam[opt=1] number opts.y Y coordinate
+-- @tparam[opt=18] number opts.w Width
+-- @tparam[opt=12] number opts.h Height
+-- @tparam[opt=colours.blue] number opts.bg Background color
+-- @tparam[opt=colours.white] number opts.fg Foreground color
+-- @treturn UIElement
 function Manager.UIElement:new(opts)
     local self = setmetatable({}, self)
     self.id = opts.id
@@ -29,6 +61,12 @@ function Manager.UIElement:new(opts)
     return self
 end
 
+--- Utility functions.
+-- @section Utility
+
+--- Finds an element or frame by its string ID.
+-- @tparam string id The ID to search for
+-- @treturn UIElement|nil Returns the element if found, otherwise nil
 function Manager.getByID(id)
     if not id then return nil end
     for _, f in ipairs(Manager.activeFrames) do
@@ -40,6 +78,15 @@ function Manager.getByID(id)
     return nil
 end
 
+--- Core Loop.
+-- @section Main
+
+--- Initializes the framework and starts the event listener loop.
+-- This function is blocking (yields).
+-- @tparam table config Configuration table
+-- @tparam table config.frames List of frames to display
+-- @tparam[opt=0.5] number config.scale Text scale for the monitor
+-- @tparam[opt] function config.onUpdate Function called every tick (0.1s)
 function Manager.init(config)
     local frames = config.frames or config
     Manager.activeFrames = frames
