@@ -1,13 +1,11 @@
---- A comprehensive showcase of the NexusUI framework.
--- This script demonstrates a 3x2 grid of frames featuring every available 
--- element: Labels with complex alignment, interactive Buttons, Input fields, 
--- Dropdowns, and Progress Bars with dynamic updates.
--- @example test2.lua
+--- NexusUI Showcase Gallery
+-- A comprehensive demonstration of all UI components.
+-- @script test2.lua
 
+-- @section Setup
 local GUI = require("lib.gui.manager")
 local mon = peripheral.find("monitor") or term.current()
 
--- 1. Create a set of Frames
 local frames = {}
 local fw, fh = 26, 13
 local pad = 1
@@ -24,6 +22,7 @@ local function makeFrame(col, row, title)
     return f
 end
 
+-- @section Labels
 -- FRAME 1: Text Alignments
 local f1 = makeFrame(1, 1, "Label Alignments")
 f1:addChild(GUI.newLabel({
@@ -33,6 +32,7 @@ f1:addChild(GUI.newLabel({
     bg = colours.black, fg = colours.yellow, mon = f1.window
 }))
 
+-- @section Buttons
 -- FRAME 2: Interactive Buttons
 local f2 = makeFrame(2, 1, "Buttons")
 local btnStatus = "Waiting..."
@@ -49,6 +49,7 @@ f2:addChild(GUI.newButton({
     mon = f2.window
 }))
 
+-- @section Inputs
 -- FRAME 3: Input Fields
 local f3 = makeFrame(3, 1, "Inputs")
 f3:addChild(GUI.newInput({
@@ -58,6 +59,7 @@ f3:addChild(GUI.newInput({
     x = 2, y = 7, w = fw-4, masked = true, placeholder = "Password", mon = f3.window
 }))
 
+-- @section Dropdowns
 -- FRAME 4: Dropdowns
 local f4 = makeFrame(1, 2, "Selection")
 f4:addChild(GUI.newDropdown({
@@ -67,6 +69,7 @@ f4:addChild(GUI.newDropdown({
     mon = f4.window
 }))
 
+-- @section ProgressBars
 -- FRAME 5: Progress Bars
 local f5 = makeFrame(2, 2, "Progress")
 local pb = f5:addChild(GUI.newProgressBar({
@@ -76,18 +79,12 @@ local pbVert = f5:addChild(GUI.newProgressBar({
     x = 2, y = 7, w = 4, h = 4, value = 75, direction = "vertical", flipped = true, mon = f5.window
 }))
 
--- FRAME 6: Dynamic Updates
-local f6 = makeFrame(3, 2, "System Info")
-local timeLbl = f6:addChild(GUI.newLabel({x=2, y=5, w=fw-4, align="center", text="00:00", mon=f6.window}))
-
+-- @section MainLoop
 -- Init and Loop
 GUI.init({
     scale = 0.5,
     frames = frames,
     onUpdate = function()
-        -- Update time
-        timeLbl:setText(textutils.formatTime(os.time(), true))
-        -- Animate progress bar
         pb.value = (pb.value + 1) % 100
         pbVert.value = (pb.value + 1) % 100
     end
