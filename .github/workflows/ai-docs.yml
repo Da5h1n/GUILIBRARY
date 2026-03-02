@@ -1,7 +1,7 @@
 name: Generate LDoc
 on:
   push:
-    branches: [ main ] # Runs every time you push to main
+    branches: [ main ]
 
 permissions:
   contents: write
@@ -16,10 +16,10 @@ jobs:
       - name: Generate Documentation
         uses: lunarmodules/ldoc@v1.5.0
         with:
-          args: . # Scans the current folder for all .lua files
+          args: . 
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./doc # LDoc outputs to a folder named 'doc' by default
+          publish_dir: ./doc 

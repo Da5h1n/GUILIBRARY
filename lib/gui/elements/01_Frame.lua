@@ -1,3 +1,6 @@
+--- A bordered container that manages sub-windows and child elements.
+-- @module Frame
+-- @alias Frame
 local GUI = ...
 
 --- A container element that provides a bordered area and a sub-window for child elements.
