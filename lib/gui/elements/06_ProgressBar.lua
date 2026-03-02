@@ -2,7 +2,7 @@
 -- @module ProgressBar
 local GUI = ...
 
---- @class ProgressBar
+
 local ProgressBar = setmetatable({}, GUI.UIElement)
 ProgressBar.__index = ProgressBar
 

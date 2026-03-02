@@ -2,7 +2,7 @@
 -- @module Input
 local GUI = ...
 
---- @class Input
+
 local Input = setmetatable({}, GUI.UIElement)
 Input.__index = Input
 

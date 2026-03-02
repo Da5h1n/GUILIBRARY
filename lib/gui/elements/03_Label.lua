@@ -2,7 +2,7 @@
 -- @module Label
 local GUI = ...
 
---- @class Label
+
 local Label = setmetatable({}, GUI.UIElement)
 Label.__index = Label
 
