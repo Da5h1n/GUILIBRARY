@@ -28,314 +28,39 @@
 
 
 
-<h2>Contents</h2>
-<ul>
-<li><a href="#Tables">Tables</a></li>
-<li><a href="#Class_UIElement">Class UIElement </a></li>
-<li><a href="#Base_class_for_all_UI_components">Base class for all UI components </a></li>
-<li><a href="#Utility_functions">Utility functions </a></li>
-<li><a href="#Core_Loop">Core Loop </a></li>
-</ul>
 
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><strong>Manager</strong></li>
+  <li><a href="modules/Manager.html">Manager</a></li>
+  <li><a href="modules/Frame.html">Frame</a></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>Manager</code></h1>
-<p>The core engine of the UI framework.</p>
-<p> Handles element registration,
- event looping, and global focus management.</p>
 
+  <h2>A modular GUI library for ComputerCraft</h2>
+  <p>This framework allows for modular UI elements using a Manager-Registry system.</p>
 
-<h2><a href="#Tables">Tables</a></h2>
-<table class="function_list">
+<h2>Modules</h2>
+<table class="module_list">
 	<tr>
-	<td class="name" nowrap><a href="#activeFrames">activeFrames</a></td>
-	<td class="summary">Currently active and visible frames.</td>
+		<td class="name"  nowrap><a href="modules/Manager.html">Manager</a></td>
+		<td class="summary">The core engine of the UI framework.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#classes">classes</a></td>
-	<td class="summary">The registry of all loaded UI classes.</td>
+		<td class="name"  nowrap><a href="modules/Frame.html">Frame</a></td>
+		<td class="summary">A bordered container that manages sub-windows and child elements.</td>
 	</tr>
 </table>
-<h2><a href="#Class_UIElement">Class UIElement </a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#uielement:register">uielement:register (name, classTable)</a></td>
-	<td class="summary">Registers a new UI class and creates a shortcut constructor.</td>
-	</tr>
-</table>
-<h2><a href="#Base_class_for_all_UI_components">Base class for all UI components </a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#Manager.UIElement:new">Manager.UIElement:new (opts)</a></td>
-	<td class="summary">Constructor for the base UIElement.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#UIElement">UIElement</a></td>
-	<td class="summary">The base UI element class that all components inherit from.</td>
-	</tr>
-</table>
-<h2><a href="#Utility_functions">Utility functions </a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#getByID">getByID (id)</a></td>
-	<td class="summary">Finds an element or frame by its string ID.</td>
-	</tr>
-</table>
-<h2><a href="#Core_Loop">Core Loop </a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#init">init (config)</a></td>
-	<td class="summary">Initializes the framework and starts the event listener loop.</td>
-	</tr>
-</table>
-
-<br/>
-<br/>
-
-
-    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "activeFrames"></a>
-    <strong>activeFrames</strong>
-    </dt>
-    <dd>
-    Currently active and visible frames.
-
-    </ul>
-    </ul>
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "classes"></a>
-    <strong>classes</strong>
-    </dt>
-    <dd>
-    The registry of all loaded UI classes.
-
-    </ul>
-    </ul>
-
-
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header has-description"><a name="Class_UIElement"></a>Class UIElement </h2>
-
-          <div class="section-description">
-          The element currently capturing keyboard input.
-          </div>
-    <dl class="function">
-    <dt>
-    <a name = "uielement:register"></a>
-    <strong>uielement:register (name, classTable)</strong>
-    </dt>
-    <dd>
-    Registers a new UI class and creates a shortcut constructor.
- For example, registering &ldquo;Button&rdquo; creates <code>Manager.newButton()</code>.
-
-    </ul>
-    </ul>
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         The name of the class
-        </li>
-        <li><span class="parameter">classTable</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-         The table containing the class methods
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Base_class_for_all_UI_components"></a>Base class for all UI components </h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "Manager.UIElement:new"></a>
-    <strong>Manager.UIElement:new (opts)</strong>
-    </dt>
-    <dd>
-    Constructor for the base UIElement.
-
-    </ul>
-    </ul>
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">opts</span> Configuration options
-        <ul>
-        <li><span class="parameter">id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Unique identifier for the element
-        </li>
-        <li><span class="parameter">x</span>
-            <span class="types"><span class="type">number</span></span>
-         X coordinate
-         (<em>default</em> 1)
-        </li>
-        <li><span class="parameter">y</span>
-            <span class="types"><span class="type">number</span></span>
-         Y coordinate
-         (<em>default</em> 1)
-        </li>
-        <li><span class="parameter">w</span>
-            <span class="types"><span class="type">number</span></span>
-         Width
-         (<em>default</em> 18)
-        </li>
-        <li><span class="parameter">h</span>
-            <span class="types"><span class="type">number</span></span>
-         Height
-         (<em>default</em> 12)
-        </li>
-        <li><span class="parameter">bg</span>
-            <span class="types"><span class="type">number</span></span>
-         Background color
-         (<em>default</em> colours.blue)
-        </li>
-        <li><span class="parameter">fg</span>
-            <span class="types"><span class="type">number</span></span>
-         Foreground color
-         (<em>default</em> colours.white)
-        </li>
-        </li></ul>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="index.html#UIElement">UIElement</a></span>
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "UIElement"></a>
-    <strong>UIElement</strong>
-    </dt>
-    <dd>
-    The base UI element class that all components inherit from.
-
-    </ul>
-    </ul>
-
-
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Utility_functions"></a>Utility functions </h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "getByID"></a>
-    <strong>getByID (id)</strong>
-    </dt>
-    <dd>
-    Finds an element or frame by its string ID.
-
-    </ul>
-    </ul>
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         The ID to search for
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="index.html#UIElement">UIElement</a> or <span class="type">nil</span></span>
-        Returns the element if found, otherwise nil
-    </ol>
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Core_Loop"></a>Core Loop </h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "init"></a>
-    <strong>init (config)</strong>
-    </dt>
-    <dd>
-    Initializes the framework and starts the event listener loop.
- This function is blocking (yields).
-
-    </ul>
-    </ul>
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">config</span> Configuration table
-        <ul>
-        <li><span class="parameter">frames</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-         List of frames to display
-        </li>
-        <li><span class="parameter">scale</span>
-            <span class="types"><span class="type">number</span></span>
-         Text scale for the monitor
-         (<em>default</em> 0.5)
-        </li>
-        <li><span class="parameter">onUpdate</span>
-            <span class="types"><span class="type">function</span></span>
-         Function called every tick (0.1s)
-         (<em>optional</em>)
-        </li>
-        </li></ul>
-    </ul>
-
-
-
-
-
-</dd>
-</dl>
-
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2026-03-02 18:53:12 </i>
+<i style="float:right;">Last updated 2026-03-02 19:00:04 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
