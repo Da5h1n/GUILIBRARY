@@ -1,9 +1,18 @@
+--- A clickable UI component that triggers an action.
+-- Buttons provide visual feedback by changing colours when clicked.
+-- @module Button
 local GUI = ...
 
----@class Button : UIElement
+--- @type Button
 local Button = setmetatable({}, GUI.UIElement)
 Button.__index = Button
 
+--- Creates a new Button instance.
+-- @tparam table opts Configuration options
+-- @tparam[opt="Button"] string opts.text The label displayed on the button
+-- @tparam[opt] function opts.action The function to execute when the button is clicked
+-- @tparam[opt=colours.black] number opts.fg_active The text colour when pressed
+-- @treturn Button
 function Button:new(opts)
     local self = GUI.UIElement.new(self, opts) 
     self.action = opts.action or function() end
@@ -16,6 +25,9 @@ function Button:new(opts)
     return self
 end
 
+
+-- Internal rendering logic.
+-- @internal
 function Button:render()
     local m = self.mon
     -- Toggle colors based on press state
@@ -38,6 +50,8 @@ function Button:render()
     m.write(txt)
 end
 
+--- Handles the click animation and executes the button's action.
+-- This function is called automatically by the Manager.
 function Button:click()
     self.isPressed = true
     self:render()
