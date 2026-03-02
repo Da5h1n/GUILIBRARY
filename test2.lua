@@ -1,3 +1,9 @@
+--- A comprehensive showcase of the NexusUI framework.
+-- This script demonstrates a 3x2 grid of frames featuring every available 
+-- element: Labels with complex alignment, interactive Buttons, Input fields, 
+-- Dropdowns, and Progress Bars with dynamic updates.
+-- @example test2.lua
+
 local GUI = require("lib.gui.manager")
 local mon = peripheral.find("monitor") or term.current()
 
@@ -6,7 +12,8 @@ local frames = {}
 local fw, fh = 26, 13
 local pad = 1
 
--- Helper to make a frame at a grid position
+--- Helper to make a frame at a grid position
+-- @internal
 local function makeFrame(col, row, title)
     local f = GUI.newFrame({
         x = (col-1)*(fw+pad)+2, y = (row-1)*(fh+pad)+2,
