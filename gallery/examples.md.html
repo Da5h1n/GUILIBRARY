@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>NexusUI Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>CC:Tweaked UI Framework</h1>
+
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Setup">Setup </a></li>
+<li><a href="#Labels___Alignment">Labels & Alignment </a></li>
+<li><a href="#Interactive_Buttons">Interactive Buttons </a></li>
+<li><a href="#Input_Fields">Input Fields </a></li>
+<li><a href="#Dropdowns">Dropdowns </a></li>
+<li><a href="#Initialisation">Initialisation </a></li>
+</ul>
+
+
+<h2>Gallery</h2>
+<ul class="nowrap">
+  <li><strong>examples</strong></li>
+</ul>
+<h2>API Reference</h2>
+<ul class="nowrap">
+  <li><a href="../api reference/Button.html">Button</a></li>
+  <li><a href="../api reference/Dropdown.html">Dropdown</a></li>
+  <li><a href="../api reference/Frame.html">Frame</a></li>
+  <li><a href="../api reference/Input.html">Input</a></li>
+  <li><a href="../api reference/Label.html">Label</a></li>
+  <li><a href="../api reference/Manager.html">Manager</a></li>
+  <li><a href="../api reference/ProgressBar.html">ProgressBar</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h1>NexusUI Showcase Gallery</h1>
+
+<p>A comprehensive demonstration of all UI components in the framework.</p>
+
+<hr />
+
+<p><a name="Setup"></a></p>
+
+<h2>Setup</h2>
+
+<p>First, we require the manager and detect the monitor.<br/>
+We also define a helper function to handle the grid layout for our frames.</p>
+
+<pre>
+<span class="keyword">local</span> GUI = <span class="global">require</span>(<span class="string">"lib.gui.manager"</span>)
+<span class="keyword">local</span> mon = peripheral.<span class="function-name">find</span>(<span class="string">"monitor"</span>) <span class="keyword">or</span> term.<span class="function-name">current</span>()
+
+<span class="keyword">local</span> frames = {}
+<span class="keyword">local</span> fw, fh = <span class="number">26</span>, <span class="number">13</span>
+<span class="keyword">local</span> pad = <span class="number">1</span>
+
+<span class="keyword">local</span> <span class="keyword">function</span> <span class="function-name">makeFrame</span>(col, row, title)
+    <span class="keyword">local</span> f = GUI.<span class="function-name">newFrame</span>({
+        x = (col-<span class="number">1</span>)*(fw+pad)+<span class="number">2</span>,
+        y = (row-<span class="number">1</span>)*(fh+pad)+<span class="number">2</span>,
+        w = fw,
+        h = fh,
+        text = title,
+        bg = colours.black,
+        bc = colours.grey,
+        mon = mon
+    })
+
+    <span class="global">table</span>.<span class="function-name">insert</span>(frames, f)
+    <span class="keyword">return</span> f
+<span class="keyword">end</span>
+</pre>
+
+
+<hr />
+
+<p><a name="Labels___Alignment"></a></p>
+
+<h2>Labels &amp; Alignment</h2>
+
+<p>Labels support multiple alignment modes.<br/>
+This example shows justified text with vertical centering.</p>
+
+<pre>
+<span class="keyword">local</span> f1 = <span class="function-name">makeFrame</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="string">"Label Alignments"</span>)
+
+f1:<span class="function-name">addChild</span>(GUI.<span class="function-name">newLabel</span>({
+    x = <span class="number">2</span>,
+    y = <span class="number">2</span>,
+    w = fw - <span class="number">4</span>,
+    h = fh - <span class="number">4</span>,
+    text = <span class="string">"Justified text looks very professional in boxes. This label is middle-aligned vertically."</span>,
+    align = <span class="string">"justify"</span>,
+    vAlign = <span class="string">"middle"</span>,
+    bg = colours.black,
+    fg = colours.yellow,
+    mon = f1.window
+}))
+</pre>
+
+
+<hr />
+
+<p><a name="Interactive_Buttons"></a></p>
+
+<h2>Interactive Buttons</h2>
+
+<p>Buttons include built-in state management for hover/active colours and callback actions.</p>
+
+<pre>
+<span class="keyword">local</span> f2 = <span class="function-name">makeFrame</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="string">"Buttons"</span>)
+
+<span class="keyword">local</span> statusLbl = f2:<span class="function-name">addChild</span>(GUI.<span class="function-name">newLabel</span>({
+    x = <span class="number">2</span>,
+    y = <span class="number">8</span>,
+    w = fw - <span class="number">4</span>,
+    text = <span class="string">"Waiting..."</span>,
+    align = <span class="string">"center"</span>,
+    mon = f2.window
+}))
+
+f2:<span class="function-name">addChild</span>(GUI.<span class="function-name">newButton</span>({
+    x = <span class="number">4</span>,
+    y = <span class="number">3</span>,
+    w = <span class="number">16</span>,
+    h = <span class="number">3</span>,
+    text = <span class="string">"Click Me"</span>,
+    bg = colours.blue,
+    bg_active = colours.cyan,
+    action = <span class="keyword">function</span>()
+        statusLbl:<span class="function-name">setText</span>(<span class="string">"Button Clicked!"</span>)
+        <span class="global">os</span>.<span class="function-name">sleep</span>(<span class="number">0.5</span>)
+        statusLbl:<span class="function-name">setText</span>(<span class="string">"Waiting..."</span>)
+    <span class="keyword">end</span>,
+    mon = f2.window
+}))
+</pre>
+
+
+<hr />
+
+<p><a name="Input_Fields"></a></p>
+
+<h2>Input Fields</h2>
+
+<p>The Input element handles text entry, including support for masked password fields and placeholders.</p>
+
+<pre>
+<span class="keyword">local</span> f3 = <span class="function-name">makeFrame</span>(<span class="number">3</span>, <span class="number">1</span>, <span class="string">"Inputs"</span>)
+
+f3:<span class="function-name">addChild</span>(GUI.<span class="function-name">newInput</span>({
+    x = <span class="number">2</span>,
+    y = <span class="number">3</span>,
+    w = fw - <span class="number">4</span>,
+    placeholder = <span class="string">"Username"</span>,
+    mon = f3.window
+}))
+
+f3:<span class="function-name">addChild</span>(GUI.<span class="function-name">newInput</span>({
+    x = <span class="number">2</span>,
+    y = <span class="number">7</span>,
+    w = fw - <span class="number">4</span>,
+    masked = <span class="keyword">true</span>,
+    placeholder = <span class="string">"Password"</span>,
+    mon = f3.window
+}))
+</pre>
+
+
+<hr />
+
+<p><a name="Dropdowns"></a></p>
+
+<h2>Dropdowns</h2>
+
+<p>Dropdowns expand when clicked to allow users to select an option from a predefined list.</p>
+
+<pre>
+<span class="keyword">local</span> f4 = <span class="function-name">makeFrame</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"Selection"</span>)
+
+f4:<span class="function-name">addChild</span>(GUI.<span class="function-name">newDropdown</span>({
+    x = <span class="number">2</span>,
+    y = <span class="number">3</span>,
+    w = fw - <span class="number">4</span>,
+    options = {
+        <span class="string">"Option A"</span>,
+        <span class="string">"Option B"</span>,
+        <span class="string">"Option C"</span>,
+        <span class="string">"Option D"</span>
+    },
+    onSelect = <span class="keyword">function</span>(val)
+        <span class="global">print</span>(<span class="string">"Selected: "</span> .. val)
+    <span class="keyword">end</span>,
+    mon = f4.window
+}))
+</pre>
+
+
+<hr />
+
+<p><a name="Initialisation"></a></p>
+
+<h2>Initialisation</h2>
+
+<p>To run the UI, you must call <code>GUI.init</code>.<br/>
+This starts the event listener and update loop.</p>
+
+<pre>
+GUI.<span class="function-name">init</span>({
+    scale = <span class="number">0.5</span>,
+    frames = frames,
+    onUpdate = <span class="keyword">function</span>()
+        <span class="comment">-- Dynamic logic goes here
+</span>    <span class="keyword">end</span>
+})
+</pre>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2026-03-02 23:05:57 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
