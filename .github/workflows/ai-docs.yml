@@ -1,0 +1,24 @@
+name: Generate AI Documentation
+on: [push] # Runs every time you upload code
+
+jobs:
+  document:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run AI Documentation Script
+        uses: logicbloom/codex-docs-action@v1 # Example of a pre-built AI doc tool
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          docs_style: "wiki"
+          output_path: "./DOCUMENTATION.md"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'AI-Doc-Bot'
+          git config --global user.email 'bot@github.com'
+          git add DOCUMENTATION.md
+          git commit -m "Auto-update documentation" || echo "No changes"
+          git push
