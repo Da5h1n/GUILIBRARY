@@ -1,39 +1,25 @@
-name: Free AI Documentation
-on: 
+name: Generate LDoc
+on:
   push:
-    paths:
-      - '**.lua' # Only runs when you change Lua code
+    branches: [ main ] # Runs every time you push to main
 
 permissions:
   contents: write
-  models: read  # This gives the Action FREE access to GitHub's AI models
 
 jobs:
-  generate-docs:
+  build-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Generate Documentation
-        uses: actions/ai-inference@v1
-        id: ai
+        uses: lunarmodules/ldoc@v0
         with:
-          model: gpt-4o # This is free through GitHub Models
-          prompt: |
-            I am building a CC:Tweaked (Minecraft) UI framework. 
-            Here is my current codebase. Please generate a professional 
-            Markdown README.md that explains how to use the Manager 
-            and each UI element (Button, Frame, etc.).
-            
-            Codebase:
-            ${{ github.workspace }}
-            
-      - name: Save README
-        run: |
-          echo "${{ steps.ai.outputs.response }}" > README.md
-          git config --global user.name 'AI-Bot'
-          git config --global user.email 'bot@github.com'
-          git add README.md
-          git commit -m "Auto-update documentation" || echo "No changes"
-          git push
+          args: . # Scans the current folder for all .lua files
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doc # LDoc outputs to a folder named 'doc' by default
