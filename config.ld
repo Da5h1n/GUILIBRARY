@@ -7,7 +7,7 @@ full_description = 'A modular UI elements system using a Manager-Registry patter
 -- Documentation Sources
 -- 1. Topics: These are manual Markdown files (Your segmented Gallery)
 topics = {
-    'examples.md'
+    'examples/examples.md'
 }
 
 -- 2. File: These are the Lua source files to be scanned for API documentation
