@@ -55,14 +55,13 @@ end
 function Button:click()
     self.isPressed = true
     self:render()
-    
+
     -- Short delay for visual feedback
-    sleep(0.1) 
-    
+    sleep(0.1)
+
     self.isPressed = false
     self:render()
-    
-    -- Execute the assigned action
+
     if self.action then self.action() end
 end
 
