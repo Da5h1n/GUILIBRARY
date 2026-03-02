@@ -5,14 +5,17 @@ local Manager = {}
 
 --- The registry of all loaded UI classes.
 -- @table classes
+-- @internal
 Manager.classes = {}
 
 --- Currently active and visible frames.
 -- @table activeFrames
+-- @internal
 Manager.activeFrames = {}
 
 --- The element currently capturing keyboard input.
 -- @type UIElement
+-- @internal
 Manager.focusedElement = nil
 
 
@@ -150,23 +153,22 @@ function Manager.init(config)
     end
 end
 
+
+-- Everything below this line is the internal file loader.
+-- We don't annotate these because the user never calls them.
+-- @section Internal
+-- @internal
 local classDir = "lib/gui/elements"
 
 if fs.exists(classDir) and fs.isDir(classDir) then
     local files = fs.list(classDir)
     table.sort(files)
-    
     for _, file in ipairs(files) do
         local path = classDir .. "/" .. file
-        local chunk, err = loadfile(path)
-        
+        local chunk, err = loadfile(path)  
         if chunk then
-            -- 1. Use the standard global environment
-            setfenv(chunk, _G) 
-            
-            -- 2. Pass the Manager (this table) as an argument to the chunk
-            local success, runErr = pcall(chunk, Manager) 
-            
+            setfenv(chunk, _G)     
+            local success, runErr = pcall(chunk, Manager)         
             if not success then
                 print("Error running " .. file .. ": " .. runErr)
             end

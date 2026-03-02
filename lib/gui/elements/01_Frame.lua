@@ -1,9 +1,17 @@
 local GUI = ...
 
----@class Frame : UIElement
+--- A container element that provides a bordered area and a sub-window for child elements.
+--- Frames act as local coordinate systems for the elements inside them.
+--- @classmod Frame
 local Frame = setmetatable({}, GUI.UIElement)
 Frame.__index = Frame
 
+--- Creates a new Frame instance.
+-- @tparam table opts Configuration options
+-- @tparam[opt=""] string opts.text The title text to display on the border
+-- @tparam[opt="left"] string opts.align Title alignment: "left", "center", or "right"
+-- @tparam[opt="top"] string opts.side Which side the title is on: "top", "bottom", "left", or "right"
+-- @treturn Frame
 function Frame:new(opts)
     local self = GUI.UIElement.new(self, opts)
     self.text = opts.text or ""
@@ -14,6 +22,8 @@ function Frame:new(opts)
     return self
 end
 
+--- Internal method to initialize the ComputerCraft window object.
+-- @internal
 function Frame:setupWindow()
     self.window = window.create(
         self.mon,
@@ -25,6 +35,8 @@ function Frame:setupWindow()
     )
 end
 
+--- Internal method to draw the border and title.
+-- @internal
 function Frame:drawBorder()
     local m = self.mon
     m.setBackgroundColor(self.bc)
@@ -93,6 +105,10 @@ function Frame:drawBorder()
     end
 end
 
+--- Adds a child element to this frame.
+-- The element will be rendered relative to the Frame's interior.
+-- @tparam UIElement element The UI component to add (Button, Label, etc.)
+-- @treturn UIElement The added element (allows for chaining)
 function Frame:addChild(element)
     element.parentFrame = self
 
@@ -100,6 +116,8 @@ function Frame:addChild(element)
     return element
 end
 
+--- Renders the frame and all its children.
+-- @tparam[opt=true] boolean clearBG Whether to clear the background color before drawing
 function Frame:render(clearBG)
     if clearBG == nil then clearBG = true end
 
@@ -115,6 +133,10 @@ function Frame:render(clearBG)
     end
 end
 
+--- Handles click events and redirects them to the correct child element.
+-- Coordinates are converted to local frame space automatically.
+-- @tparam number x The X coordinate of the click
+-- @tparam number y The Y coordinate of the click
 function Frame:click(x, y)
     local ix = x - self.x
     local iy = y - self.y
