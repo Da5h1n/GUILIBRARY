@@ -4,9 +4,6 @@ export default defineConfig({
   title: "Flux",
   description: "Fluid UI library for CC:Tweaked",
   base: '/',
-  vite: {
-    assetsInclude: ['**/*.html']
-  },
 
   themeConfig: {
     nav: [
