@@ -4,13 +4,20 @@ description = 'A high-performance, fluid GUI library for CC:Tweaked'
 
 file = { 'lib/gui/Flux.lua', 'lib/gui/elements' }
 dir = 'docs/api'
--- We use 'discount' to parse your comments, but NOT 'format = markdown'
-format = 'discount' 
-ext = 'md' 
--- This ensures LDoc uses its multi-file engine but writes .md files
-use_markdown_titles = true 
 
-alias('common_opts', [[
+-- DO NOT USE 'markdown' or 'discount' here if the error persists.
+-- 'plain' or 'html' (default) is safer for multi-file output.
+format = 'plain' 
+ext = 'md'
+
+-- We handle the naming of sections via kind_names
+kind_names = {
+    topic = "Manuals",
+    module = "Components"
+}
+
+-- ALIAS FIX: Rename to avoid the underscore which is causing the 'unknown tag'
+alias('common', [[
 @tparam table opts Options table:
 @tparam[opt] string opts.id Unique ID
 @tparam[opt=1] number opts.x X position
@@ -25,3 +32,6 @@ custom_tags = {
     {'gui', hidden = true},
     {'internal', hidden = true}
 }
+
+backtick_references = true
+sort = true

@@ -5,7 +5,7 @@ local Button = setmetatable({}, GUI.UIElement)
 Button.__index = Button
 
 --- Create a new Button.
--- @common_opts
+-- @common
 -- @tparam[opt="Button"] string opts.text Button label
 -- @tparam[opt] function opts.action Callback function on click
 -- @tparam[opt=colours.white] number opts.bg_active Color when pressed
