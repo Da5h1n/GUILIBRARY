@@ -20,11 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 1. Generate LDoc HTML (works with multiple modules)
-      - name: Generate API Docs (HTML)
+      # 1. Generate LDoc output into docs/public/api
+      - name: Generate API Docs (LDoc)
         uses: lunarmodules/ldoc@v1.5.0
         with:
-          args: .
+          args: "-d docs/public/api ."
 
       # 2. Setup Node.js for VitePress
       - name: Setup Node
@@ -33,7 +33,7 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # 3. Install VitePress dependencies
+      # 3. Install dependencies
       - name: Install Dependencies
         run: npm install
 
@@ -41,7 +41,7 @@ jobs:
       - name: Build VitePress
         run: npm run docs:build
 
-      # 5. Deploy final static site to GitHub Pages
+      # 5. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

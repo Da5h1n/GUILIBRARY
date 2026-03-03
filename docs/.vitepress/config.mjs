@@ -3,7 +3,11 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Flux",
   description: "Fluid UI library for CC:Tweaked",
-  base: '/GUILIBRARY/', // Crucial for GitHub Pages! Matches your repo name.
+  base: '/GUILIBRARY/',
+  vite: {
+    assetsInclude: ['**/*.html']
+  },
+
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
