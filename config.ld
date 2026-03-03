@@ -5,7 +5,7 @@ description = 'A high-performance, fluid GUI library for CC:Tweaked'
 
 -- Documentation Sources
 file = { 
-    'lib/gui/manager.lua', 
+    'lib/gui/Flux.lua', 
     'lib/gui/elements' 
 }
 

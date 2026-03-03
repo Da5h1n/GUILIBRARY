@@ -22,7 +22,7 @@ export default defineConfig({
       {
         text: 'API Reference',
         items: [
-          { text: 'Manager', link: '/api/manager' },
+          { text: 'Flux', link: '/api/Flux' },
           { text: 'Button', link: '/api/02_Button' },
           { text: 'Label', link: '/api/03_Label' },
           // add others here
