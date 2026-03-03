@@ -16,16 +16,14 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'Getting Started', link: '/' },
-          { text: 'Gallery', link: '/gallery' },
         ]
       },
       {
         text: 'API Reference',
         items: [
-          { text: 'Flux', link: '/api/Flux' },
-          { text: 'Button', link: '/api/02_Button' },
-          { text: 'Label', link: '/api/03_Label' },
-          // add others here
+          { text: 'Flux Engine', link: '/api/modules/Flux' },
+          { text: 'Button', link: '/api/modules/Button' },
+          { text: 'Label', link: '/api/modules/Label' },
         ]
       }
     ],

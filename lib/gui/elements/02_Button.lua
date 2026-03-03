@@ -5,7 +5,15 @@ local Button = setmetatable({}, GUI.UIElement)
 Button.__index = Button
 
 --- Create a new Button.
--- @common
+-- @tparam table opts Options table
+-- @tparam[opt] string opts.id Unique ID
+-- @tparam[opt=1] number opts.x X position
+-- @tparam[opt=1] number opts.y Y position
+-- @tparam[opt] number opts.w Width
+-- @tparam[opt] number opts.h Height
+-- @tparam[opt] number opts.bg Background Color
+-- @tparam[opt] number opts.fg Foreground Color
+-- @tparam[opt] table opts.mon Target monitor
 -- @tparam[opt="Button"] string opts.text Button label
 -- @tparam[opt] function opts.action Callback function on click
 -- @tparam[opt=colours.white] number opts.bg_active Color when pressed
