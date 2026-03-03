@@ -4,10 +4,15 @@ title = 'Flux Documentation'
 description = 'A high-performance, fluid GUI library for CC:Tweaked'
 
 -- Sources
-file = { 'lib/gui/Flux.lua', 'lib/gui/elements' }
+file = { 
+    'lib/gui/Flux.lua', 
+    'lib/gui/elements' 
+}
 dir = 'docs/api'
 
 ext = 'md'
+format = 'plain' 
+
 kind_names = {
     topic = "Manuals",
     module = "Components"
