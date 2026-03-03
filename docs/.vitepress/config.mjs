@@ -11,14 +11,14 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/getting-started' }
+      { text: 'Guide', link: '/guides/getting-started' }
     ],
 
     sidebar: [
       {
         text: 'Introduction',
         items: [
-          { text: 'Getting Started', link: '/getting-started' },
+          { text: 'Getting Started', link: '/guides/getting-started' },
         ]
       },
       {
