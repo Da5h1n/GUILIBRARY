@@ -27,14 +27,20 @@ function Dropdown:new(opts)
     self.expandedH = #self.options + 1
     self.h = self.closedH
 
+    self.scroll = opts.scroll or true
+    self.scrollSpeed = opts.scrollSpeed or 0.3
+    self.scrollDelay = opts.scrollDelay or 2.0
+
     self.headerLabel = GUI.newLabel({
         mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
-        text = "", align = "left", bg = self.bg, fg = self.fg
+        text = "", align = "left", bg = self.bg, fg = self.fg,
+        scroll = self.scroll, scrollSpeed = self.scrollSpeed, scrollDelay = self.scrollDelay
     })
 
     self.itemLabel = GUI.newLabel({
         mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
-        text = "", align = "left"
+        text = "", align = "left",
+        scroll = self.scroll, scrollSpeed = self.scrollSpeed, scrollDelay = self.scrollDelay
     })
 
     return self

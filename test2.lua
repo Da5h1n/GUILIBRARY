@@ -1,4 +1,4 @@
-local GUI = require("lib.gui.manager")
+local GUI = require("lib.gui.Flux")
 local mon = peripheral.find("monitor") or term.current()
 
 local frames = {}

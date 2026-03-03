@@ -1,0 +1,16 @@
+# Node dependencies (The biggest one!)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VitePress build output (GitHub Actions will build this fresh anyway)
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+# Old LDoc HTML output (since we are moving to VitePress)
+doc/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

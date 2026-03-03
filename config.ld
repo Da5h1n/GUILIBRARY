@@ -1,17 +1,27 @@
-project = 'NexusUI'
-title = 'NexusUI Documentation'
-description = 'A modular GUI library for CC:Tweaked'
+-- Project Metadata
+project = 'Flux'
+title = 'Flux Documentation'
+description = 'A high-performance, fluid GUI library for CC:Tweaked'
 
-file = { 'lib/gui/manager.lua', 'lib/gui/elements' }
-dir = 'doc'
-format = 'discount'
+-- Documentation Sources
+file = { 
+    'lib/gui/manager.lua', 
+    'lib/gui/elements' 
+}
 
--- Customization
-style = 'doc'     -- Path to your custom CSS
-template = 'doc/templates'   -- Path to your custom HTML templates folder
+dir = 'docs/api'           
+format = 'markdown'        
+ext = 'md'                 
+use_markdown_titles = true 
 
--- ALIASES: This is how we make annotations carry through.
--- Use @common_opts in any file to insert the standard UI parameters.
+-- Sidebar Customization for VitePress
+kind_names = {
+    topic = "Manuals",
+    module = "Components"
+}
+
+-- ALIASES
+-- Using the newline fix we discussed to ensure @tparam is recognized
 alias('common_opts', [[
 
 @tparam table opts Options table:
@@ -25,7 +35,12 @@ alias('common_opts', [[
 @tparam[opt] table opts.mon Target monitor
 ]])
 
+-- Custom Tag Handling
 custom_tags = {
     {'gui', hidden = true},
     {'internal', hidden = true}
 }
+
+-- Visual Tweaks
+backtick_references = true -- Automatically links `ClassName` to its doc page
+sort = true                -- Keeps the sidebar alphabetical

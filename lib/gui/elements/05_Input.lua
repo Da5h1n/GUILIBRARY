@@ -11,6 +11,8 @@ Input.__index = Input
 function Input:new(opts)
     local self = GUI.UIElement.new(self, opts)
 
+    self.h = opts.h or 1
+
     self.text = opts.text or ""
     self.maxLen = opts.maxLen or 20
     self.placeholder = opts.placeholder or "Type here..."
