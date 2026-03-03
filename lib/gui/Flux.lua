@@ -1,6 +1,6 @@
 --- The core engine of the UI framework. Handles element registration,
 -- event looping, and global focus management.
--- @module Flux
+-- @module lib.gui.Flux
 local Flux = {}
 
 -- @internal

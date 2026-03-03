@@ -1,5 +1,5 @@
 --- A clickable button component.
--- @module Button
+-- @module elements.Button
 local GUI = ...
 local Button = setmetatable({}, GUI.UIElement)
 Button.__index = Button
