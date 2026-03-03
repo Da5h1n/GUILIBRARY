@@ -56,8 +56,8 @@
 
 <h1>Module <code>lib.gui.Flux</code></h1>
 <p>The core engine of the UI framework.</p>
-<p>Handles element registration,
-event looping, and global focus management.</p>
+<p> Handles element registration,
+ event looping, and global focus management.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -103,7 +103,7 @@ event looping, and global focus management.</p>
     </dt>
     <dd>
     Registers a new UI class and creates a shortcut constructor.
-For example, registering &quot;Button&quot; creates <!-- raw HTML omitted -->Flux.newButton()<!-- raw HTML omitted -->.
+ For example, registering "Button" creates <code>Flux.newButton()</code>.
 
     </ul>
     </ul>
@@ -112,11 +112,11 @@ For example, registering &quot;Button&quot; creates <!-- raw HTML omitted -->Flu
     <ul>
         <li><span class="parameter">name</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-        The name of the class
+         The name of the class
         </li>
         <li><span class="parameter">classTable</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-        The table containing the class methods
+         The table containing the class methods
         </li>
     </ul>
 
@@ -151,7 +151,7 @@ For example, registering &quot;Button&quot; creates <!-- raw HTML omitted -->Flu
     </dt>
     <dd>
     Base UI element properties.
-All UI components (Buttons, Labels, etc.) inherit these fields.
+ All UI components (Buttons, Labels, etc.) inherit these fields.
 
     </ul>
     </ul>
@@ -160,42 +160,42 @@ All UI components (Buttons, Labels, etc.) inherit these fields.
     <ul>
         <li><span class="parameter">id</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-        Unique identifier for the element
+         Unique identifier for the element
          (<em>optional</em>)
         </li>
         <li><span class="parameter">x</span>
             <span class="types"><span class="type">number</span></span>
-        Width
+         Width
          (<em>default</em> 18)
         </li>
         <li><span class="parameter">y</span>
             <span class="types"><span class="type">number</span></span>
-        Y coordinate
+         Y coordinate
          (<em>default</em> 1)
         </li>
         <li><span class="parameter">x</span>
             <span class="types"><span class="type">number</span></span>
-        Width
+         Width
          (<em>default</em> 18)
         </li>
         <li><span class="parameter">h</span>
             <span class="types"><span class="type">number</span></span>
-        Height
+         Height
          (<em>default</em> 12)
         </li>
         <li><span class="parameter">bg</span>
             <span class="types"><span class="type">number</span></span>
-        Background color
+         Background color
          (<em>default</em> colours.blue)
         </li>
         <li><span class="parameter">fg</span>
             <span class="types"><span class="type">number</span></span>
-        Foreground color
+         Foreground color
          (<em>default</em> colours.white)
         </li>
         <li><span class="parameter">mon</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-        The display target (monitor or term)
+         The display target (monitor or term)
          (<em>default</em> term)
         </li>
     </ul>
@@ -219,7 +219,7 @@ All UI components (Buttons, Labels, etc.) inherit these fields.
     <ul>
         <li><span class="parameter">duration</span>
             <span class="types"><span class="type">number</span></span>
-        The seconds to wait before continuing.
+         The seconds to wait before continuing.
         </li>
     </ul>
 
@@ -238,27 +238,27 @@ All UI components (Buttons, Labels, etc.) inherit these fields.
     </dt>
     <dd>
     Initializes the framework and starts the event listener loop.
-This function is blocking (yields).
+ This function is blocking (yields).
 
     </ul>
     </ul>
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">config</span>Configuration table
+        <li><span class="parameter">config</span> Configuration table
         <ul>
         <li><span class="parameter">frames</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-        List of frames to display
+         List of frames to display
         </li>
         <li><span class="parameter">scale</span>
             <span class="types"><span class="type">number</span></span>
-        Text scale for the monitor
+         Text scale for the monitor
          (<em>default</em> 0.5)
         </li>
         <li><span class="parameter">onUpdate</span>
             <span class="types"><span class="type">function</span></span>
-        Function called every tick (0.1s)
+         Function called every tick (0.1s)
          (<em>optional</em>)
         </li>
         </li></ul>
@@ -276,7 +276,7 @@ This function is blocking (yields).
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2026-03-03 23:21:39 </i>
+<i style="float:right;">Last updated 2026-03-03 23:28:47 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
