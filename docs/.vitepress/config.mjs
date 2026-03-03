@@ -1,14 +1,13 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Flux",
   description: "Fluid UI library for CC:Tweaked",
+  base: '/GUILIBRARY/', // Crucial for GitHub Pages! Matches your repo name.
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Guide', link: '/guide' }
     ],
 
     sidebar: [
@@ -22,14 +21,18 @@ export default defineConfig({
         text: 'API Reference',
         items: [
           { text: 'Flux Engine', link: '/api/modules/Flux' },
+          { text: 'Frame', link: '/api/modules/Frame' },
           { text: 'Button', link: '/api/modules/Button' },
           { text: 'Label', link: '/api/modules/Label' },
+          { text: 'Dropdown', link: '/api/modules/Dropdown' },
+          { text: 'Input', link: '/api/modules/Input' },
+          { text: 'ProgressBar', link: '/api/modules/ProgressBar' },
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/Da5h1n/GUILIBRARY' }
     ]
   }
 })
