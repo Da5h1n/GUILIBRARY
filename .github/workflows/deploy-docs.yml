@@ -2,7 +2,7 @@ name: Deploy Flux Documentation
 
 on:
   push:
-    branches: [ dev ] # Trigger on your dev branch
+    branches: [ dev ]
   workflow_dispatch:
 
 permissions:
@@ -13,36 +13,38 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 1. Run LDoc to generate Markdown files for VitePress
-      - name: Generate API Markdown
+      # 1. Generate LDoc HTML (works with multiple modules)
+      - name: Generate API Docs (HTML)
         uses: lunarmodules/ldoc@v1.5.0
         with:
-          args: . 
+          args: .
 
-      # 2. Setup Node.js to run VitePress
+      # 2. Setup Node.js for VitePress
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      # 3. Install VitePress and dependencies
+      # 3. Install VitePress dependencies
       - name: Install Dependencies
         run: npm install
 
-      # 4. Build the VitePress site
+      # 4. Build VitePress site
       - name: Build VitePress
         run: npm run docs:build
 
-      # 5. Deploy the build output to GitHub Pages
+      # 5. Deploy final static site to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist # VitePress puts the site here
+          publish_dir: docs/.vitepress/dist
+          publish_branch: gh-pages
