@@ -1,5 +1,9 @@
+--- The core engine of the UI framework. Handles element registration,
+-- event looping, and global focus management.
+-- @module Manager
 local Manager = {}
 
+-- @internal
 Manager.classes = {}
 Manager.activeFrames = {}
 Manager.focusedElement = nil
@@ -7,6 +11,10 @@ Manager.lastTick = 0
 Manager.onUpdate = nil
 Manager.timerID = nil -- NEW: Global timer ID
 
+--- Registers a new UI class and creates a shortcut constructor.
+-- For example, registering "Button" creates `Manager.newButton()`.
+-- @tparam string name The name of the class
+-- @tparam table classTable The table containing the class methods
 function Manager.register(name, classTable)
     Manager.classes[name] = classTable
     Manager["new" .. name] = function(opts)
@@ -14,9 +22,25 @@ function Manager.register(name, classTable)
     end
 end
 
+--- Base class for all UI components.
+-- @section UIElement
+
+--- The base UI element class that all components inherit from.
+-- @table UIElement
 Manager.UIElement = {}
 Manager.UIElement.__index = Manager.UIElement
 
+--- Base UI element properties.
+-- All UI components (Buttons, Labels, etc.) inherit these fields.
+-- @table UIElement
+-- @tparam[opt] string id Unique identifier for the element
+-- @tparam[opt=1] number x X coordinate
+-- @tparam[opt=1] number y Y coordinate
+-- @tparam[opt=18] number x Width
+-- @tparam[opt=12] number h Height
+-- @tparam[opt=colours.blue] number bg Background color
+-- @tparam[opt=colours.white] number fg Foreground color
+-- @tparam[opt=term] table mon The display target (monitor or term)
 function Manager.UIElement:new(opts)
     local self = setmetatable({}, self)
     self.id = opts.id
@@ -48,11 +72,12 @@ local function runUpdateTick()
     Manager.lastTick = os.clock()
 end
 
--- NEW: Helper to restart the heartbeat
 function Manager.resetTimer()
     Manager.timerID = os.startTimer(0.1)
 end
 
+--- The main way to wait without blocking other UI updates.
+-- @tparam number duration The seconds to wait before continuing.
 function Manager.sleep(duration)
     local target = os.clock() + duration
     local sleepTimer = os.startTimer(duration)
@@ -63,15 +88,15 @@ function Manager.sleep(duration)
 
         if e == "timer" then
             if event[2] == sleepTimer then
-                break -- Duration reached
+                break 
             elseif event[2] == Manager.timerID then
                 runUpdateTick()
-                Manager.resetTimer() -- Keep heartbeat alive DURING sleep
+                Manager.resetTimer()
             end
         elseif e == "monitor_resize" then
             for _, f in ipairs(Manager.activeFrames) do f:render(true) end
         end
-        -- Fallback if events are slow
+
         if os.clock() - Manager.lastTick >= 0.15 then
             runUpdateTick()
             Manager.resetTimer()
@@ -79,6 +104,16 @@ function Manager.sleep(duration)
     end
 end
 
+
+--- Core Loop.
+-- @section Main
+
+--- Initializes the framework and starts the event listener loop.
+-- This function is blocking (yields).
+-- @tparam table config Configuration table
+-- @tparam table config.frames List of frames to display
+-- @tparam[opt=0.5] number config.scale Text scale for the monitor
+-- @tparam[opt] function config.onUpdate Function called every tick (0.1s)
 function Manager.init(config)
     local frames = config.frames or config
     Manager.activeFrames = frames
@@ -137,7 +172,11 @@ function Manager.init(config)
     end
 end
 
--- Loader
+
+-- Everything below this line is the internal file loader.
+-- We don't annotate these because the user never calls them.
+-- @section Internal
+-- @internal
 local classDir = "lib/gui/elements"
 if fs.exists(classDir) and fs.isDir(classDir) then
     local files = fs.list(classDir)
