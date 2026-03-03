@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Flux",
   description: "Fluid UI library for CC:Tweaked",
-  base: '/GUILIBRARY/',
+  base: '/',
   vite: {
     assetsInclude: ['**/*.html']
   },
