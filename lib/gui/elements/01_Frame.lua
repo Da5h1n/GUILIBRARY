@@ -1,6 +1,6 @@
 --- A bordered container that manages sub-windows and child elements.
--- Frames act as local coordinate systems for the elements inside them.
--- @module Frame
+--- Frames act as local coordinate systems for the elements inside them.
+-- @module elements.Frame
 local GUI = ...
 
 local Frame = setmetatable({}, GUI.UIElement)
