@@ -6,7 +6,8 @@ file = {
     'lib/gui/Flux.lua', 
     'lib/gui/elements' 
 }
-dir = 'docs/api'
+dir = 'docs/public/api'
+
 
 format = 'html'
 
