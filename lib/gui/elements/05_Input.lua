@@ -26,16 +26,16 @@ function Input:new(opts)
     self.cursorTimer = 0
     self.focused = false
 
+    self.textLabel = GUI.newLabel({
+        mon = self.mon, x = self.x, y = self.y,
+        w = self.showToggle and (self.w - 2) or self.w, h = 1,
+        text = "", align = "left", bg = self.bg, fg = self.fg
+    })
+
     if self.masked and self.showToggle then
         self.toggleBtn = GUI.newButton({
-            mon = self.mon,
-            parent = self.mon,
-            x = self.x + self.w - 1,
-            y = self.y,
-            w = 1, h = 1,
-            text = "X",
-            bg = colours.grey,
-            fg = colours.white,
+            mon = self.mon, x = self.x + self.w - 2, y = self.y,
+            w = 1, h = 1, text = "X", bg = colours.grey, fg = colours.white,
             action = function()
                 self.isUnmasked = not self.isUnmasked
                 self.toggleBtn.text = self.isUnmasked and "O" or "X"
@@ -49,36 +49,29 @@ end
 
 function Input:render()
     local m = self.mon
-    m.setBackgroundColor(self.bg)
-    m.setCursorPos(self.x, self.y)
-    m.write((" "):rep(self.w))
-
     local displayText = self.text
+
     if #displayText == 0 then
-        m.setTextColor(colours.lightGrey)
-        displayText = self.placeholder
+        self.textLabel.fg = colours.lightGrey
+        self.textLabel.text = self.placeholder
     else
-        m.setTextColor(self.fg)
+        self.textLabel.fg = self.fg
         if self.masked and not self.isUnmasked then
-            displayText = (self.maskChar):rep(#displayText)
+            self.textLabel.text = (self.maskChar):rep(#displayText)
+        else
+            self.textLabel.text = displayText
         end
     end
 
-    local availableW = self.showToggle and (self.w - 2) or self.w
-    m.setCursorPos(self.x, self.y)
+    self.textLabel:render()
 
-    local finalStr = displayText:sub(1, availableW)
-    m.write(finalStr)
-
-    if self.focused and self.showCursor and #self.text < availableW then
+    if self.focused and self.showCursor and #self.text < self.textLabel.w then
         m.setCursorPos(self.x + #self.text, self.y)
         m.setTextColor(self.fg)
         m.write(self.cursorChar)
     end
-
-    if self.toggleBtn then
-        self.toggleBtn:render()
-    end
+    
+    if self.toggleBtn then self.toggleBtn:render() end
 end
 
 --- Internal update loop for handling cursor blinking.

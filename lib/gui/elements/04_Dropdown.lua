@@ -26,35 +26,41 @@ function Dropdown:new(opts)
     self.closedH = 1
     self.expandedH = #self.options + 1
     self.h = self.closedH
+
+    self.headerLabel = GUI.newLabel({
+        mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
+        text = "", align = "left", bg = self.bg, fg = self.fg
+    })
+
+    self.itemLabel = GUI.newLabel({
+        mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
+        text = "", align = "left"
+    })
+
     return self
 end
 
 function Dropdown:render()
     local m = self.mon
-    
-    local headerBG = self.isOpen and self.bg_open or self.bg
-
-    m.setBackgroundColor(headerBG)
-    m.setTextColor(self.fg)
-    m.setCursorPos(self.x, self.y)
-
     local arrow = self.isOpen and "v" or ">"
-    local txt = arrow .. " " .. tostring(self.options[self.selected] or "None")
-    m.write(txt:sub(1, self.w)..string.rep(" ", self.w - #txt))
+    local selectedText = tostring(self.options[self.selected] or "None")
+
+    self.headerLabel.text = arrow .. " " .. selectedText
+    self.headerLabel.bg = self.isOpen and self.bg_open or self.bg
+    self.headerLabel:render()
 
     if self.isOpen then
         for i, option in ipairs(self.options) do
-            m.setCursorPos(self.x, self.y + i)
+            self.itemLabel.y = self.y + i
+            self.itemLabel.text = "  " .. tostring(option)
 
             if i == self.selected then
-                m.setBackgroundColor(self.bg_sel)
-                m.setTextColor(self.fg_sel)
+                self.itemLabel.bg, self.itemLabel.fg = self.bg_sel, self.fg_sel
             else
-                m.setBackgroundColor(self.bg_list)
-                m.setTextColor(self.fg_list)
+                self.itemLabel.bg, self.itemLabel.fg = self.bg_list, self.fg_list
             end
-            local optTxt = "  " .. tostring(option)
-            m.write(optTxt:sub(1, self.w)..string.rep(" ", self.w - #optTxt))
+
+            self.itemLabel:render()
         end
     end
 end

@@ -16,7 +16,7 @@ function ProgressBar:new(opts)
     self.showText = opts.showText ~= false
     self.direction = opts.direction or "horizontal"
     self.flipped = opts.flipped or false
-
+    
     return self
 end
 

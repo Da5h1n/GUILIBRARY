@@ -26,54 +26,69 @@ end
 local function getWrappedLines(text, width, align)
     local lines = {}
     local words = {}
-    for word in text:gmatch("%S+") do table.insert(words, word) end
 
-    local currentLine = {}
-    local currentLen = 0
+    -- 1. Capture words and their following spaces
+    for word in text:gmatch("%S+%s*") do
+        table.insert(words, word)
+    end
 
+    -- Preserve leading spaces
+    local leading = text:match("^%s+")
+    if leading and #words > 0 then
+        words[1] = leading .. words[1]
+    elseif leading and #words == 0 then
+        table.insert(words, leading)
+    end
+
+    -- 2. Wrap words into lines (stored as strings)
+    local currentLine = ""
     for _, word in ipairs(words) do
-        if currentLen + #word + #currentLine <= width then
-            table.insert(currentLine, word)
-            currentLen = currentLen + #word
+        if #currentLine + #word <= width then
+            currentLine = currentLine .. word
         else
-            table.insert(lines, currentLine)
-            currentLine = {word}
-            currentLen = #word
+            if #currentLine > 0 then table.insert(lines, currentLine) end
+            currentLine = word
         end
     end
     table.insert(lines, currentLine)
-
+    
     local processedLines = {}
-    for i, lineWords in ipairs(lines) do
-        local lineStr = table.concat(lineWords, " ")
+    for i, lineStr in ipairs(lines) do
+        local trimmed = lineStr:gsub("%s+$", "")
 
-        if align == "justify" and i < #lines and #lineWords > 1 then
-            local totalChars = 0
-            for _, w in ipairs(lineWords) do totalChars = totalChars + #w end
-            local spacesNeeded = width - totalChars
-            local gaps = #lineWords - 1
-            local spacePerGap = math.floor(spacesNeeded / gaps)
-            local extraSpaces = spacesNeeded % gaps
+        if align == "justify" and i < #lines then
+            local justifyWords = {}
+            for w in lineStr:gmatch("%S+") do table.insert(justifyWords, w) end
 
-            local justified = ""
-            for j, w in ipairs(lineWords) do
-                justified = justified .. w
-                if j < #lineWords then
-                    local s = spacePerGap + (j <= extraSpaces and 1 or 0)
-                    justified = justified .. string.rep(" ", s)
+            if #justifyWords > 1 then
+                local totalChars = 0
+                for _, w in ipairs(justifyWords) do totalChars = totalChars + #w end
+                
+                local spacesNeeded = width - totalChars
+                local gaps = #justifyWords - 1
+                local spacePerGap = math.floor(spacesNeeded / gaps)
+                local extraSpaces = spacesNeeded % gaps
+
+                local justified = ""
+                for j, w in ipairs(justifyWords) do
+                    justified = justified .. w
+                    if j < #justifyWords then
+                        local s = spacePerGap + (j <= extraSpaces and 1 or 0)
+                        justified = justified .. string.rep(" ", s)
+                    end
                 end
-            end
-            table.insert(processedLines, justified)
-        else
-            if align == "center" then
-                local pad = math.floor((width - #lineStr) / 2)
-                table.insert(processedLines, string.rep(" ", pad) .. lineStr)
-            elseif align == "right" then
-                local pad = width - #lineStr
-                table.insert(processedLines, string.rep(" ", pad) .. lineStr)
+                table.insert(processedLines, justified)
             else
                 table.insert(processedLines, lineStr)
             end
+        elseif align == "center" then
+            local pad = math.floor((width - #trimmed) / 2)
+            table.insert(processedLines, string.rep(" ", pad) .. trimmed)
+        elseif align == "right" then
+            local pad = width - #trimmed
+            table.insert(processedLines, string.rep(" ", pad) .. trimmed)
+        else
+            table.insert(processedLines, lineStr)
         end
     end
     return processedLines
