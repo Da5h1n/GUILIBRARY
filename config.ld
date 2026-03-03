@@ -10,8 +10,8 @@ file = {
 }
 dir = 'docs/api'
 
-ext = 'md'
-format = 'plain' 
+ext = 'html'
+format = 'html' 
 
 kind_names = {
     topic = "Manuals",
