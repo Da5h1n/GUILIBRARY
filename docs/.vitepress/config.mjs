@@ -21,13 +21,13 @@ export default defineConfig({
       {
         text: 'API Reference',
         items: [
-          { text: 'Flux Engine', link: '/api/modules/Flux' },
-          { text: 'Frame', link: '/api/modules/Frame' },
-          { text: 'Button', link: '/api/modules/Button' },
-          { text: 'Label', link: '/api/modules/Label' },
-          { text: 'Dropdown', link: '/api/modules/Dropdown' },
-          { text: 'Input', link: '/api/modules/Input' },
-          { text: 'ProgressBar', link: '/api/modules/ProgressBar' },
+          { text: 'Flux Engine', link: '/api/Flux' },
+          { text: 'Frame', link: '/api/Frame' },
+          { text: 'Button', link: '/api/Button' },
+          { text: 'Label', link: '/api/Label' },
+          { text: 'Dropdown', link: '/api/Dropdown' },
+          { text: 'Input', link: '/api/Input' },
+          { text: 'ProgressBar', link: '/api/ProgressBar' },
         ]
       }
     ],
