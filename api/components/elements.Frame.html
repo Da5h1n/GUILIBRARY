@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Flux Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Flux</h1>
+
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Components</h2>
+<ul class="nowrap">
+  <li><a href="../components/Dropdown.html">Dropdown</a></li>
+  <li><a href="../components/Input.html">Input</a></li>
+  <li><a href="../components/Label.html">Label</a></li>
+  <li><a href="../components/ProgressBar.html">ProgressBar</a></li>
+  <li><a href="../components/elements.Button.html">elements.Button</a></li>
+  <li><strong>elements.Frame</strong></li>
+  <li><a href="../components/lib.gui.Flux.html">lib.gui.Flux</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>elements.Frame</code></h1>
+<p>A bordered container that manages sub-windows and child elements.</p>
+<p> Frames act as local coordinate systems for the elements inside them.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#addChild">addChild (element)</a></td>
+	<td class="summary">Adds a child element to this frame.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#click">click (x, y)</a></td>
+	<td class="summary">Handles click events and redirects them to the correct child element.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#drawBorder">drawBorder ()</a></td>
+	<td class="summary">Internal method to draw the border and title.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new">new (opts)</a></td>
+	<td class="summary">Creates a new Frame instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#render">render ([clearBG=true])</a></td>
+	<td class="summary">Renders the frame and all its children.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setupWindow">setupWindow ()</a></td>
+	<td class="summary">Internal method to initialize the ComputerCraft window object.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "addChild"></a>
+    <strong>addChild (element)</strong>
+    </dt>
+    <dd>
+    Adds a child element to this frame.
+ The element will be rendered relative to the Frame&rsquo;s interior.
+
+    </ul>
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">element</span>
+            <span class="types"><span class="type">UIElement</span></span>
+         The UI component to add (Button, Label, etc.)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">UIElement</span></span>
+        The added element (allows for chaining)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "click"></a>
+    <strong>click (x, y)</strong>
+    </dt>
+    <dd>
+    Handles click events and redirects them to the correct child element.
+ Coordinates are converted to local frame space automatically.
+
+    </ul>
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The X coordinate of the click
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The Y coordinate of the click
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "drawBorder"></a>
+    <strong>drawBorder ()</strong>
+    </dt>
+    <dd>
+    Internal method to draw the border and title.
+
+    </ul>
+    </ul>
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new"></a>
+    <strong>new (opts)</strong>
+    </dt>
+    <dd>
+    Creates a new Frame instance.
+
+    </ul>
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">opts</span> Configuration options
+        <ul>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         The title text to display on the border
+         (<em>default</em> "")
+        </li>
+        <li><span class="parameter">align</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Title alignment: &ldquo;left&rdquo;, &ldquo;center&rdquo;, or &ldquo;right&rdquo;
+         (<em>default</em> "left")
+        </li>
+        <li><span class="parameter">side</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Which side the title is on: &ldquo;top&rdquo;, &ldquo;bottom&rdquo;, &ldquo;left&rdquo;, or &ldquo;right&rdquo;
+         (<em>default</em> "top")
+        </li>
+        </li></ul>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Frame</span></span>
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "render"></a>
+    <strong>render ([clearBG=true])</strong>
+    </dt>
+    <dd>
+    Renders the frame and all its children.
+
+    </ul>
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">clearBG</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether to clear the background color before drawing
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setupWindow"></a>
+    <strong>setupWindow ()</strong>
+    </dt>
+    <dd>
+    Internal method to initialize the ComputerCraft window object.
+
+    </ul>
+    </ul>
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2026-03-03 22:50:08 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
