@@ -65,24 +65,44 @@ end
 
 function Input:render()
     local m = self.mon
-    self:updateScroll()
-
     local rawText = self.text
-    if #rawText == 0 and not self.focused then
-        self.textLabel.fg = colours.lightGrey
-        self.textLabel.text = self.placeholder
-    else
-        self.textLabel.fg = self.fg
+    
+    -- Determine the state: Editing (Manual Window) vs Idle (Label Marquee)
+    if self.focused then
+        self:updateScroll()
+        
+        -- Disable Label's internal marquee logic so it doesn't fight our cursor
+        self.textLabel.scroll = false 
+        self.textLabel.scrollOffset = 0 
+
         local procText = rawText
-        if self.masked and not self.isUnmasked then
-            procText = (self.maskChar):rep(#rawText)
+        if #rawText == 0 then
+            self.textLabel.fg = colours.lightGrey
+            self.textLabel.text = self.placeholder
+        else
+            self.textLabel.fg = self.fg
+            if self.masked and not self.isUnmasked then
+                procText = (self.maskChar):rep(#rawText)
+            end
+            -- We manually "scroll" by sending a substring to the Label
+            self.textLabel.text = procText:sub(self.scrollOffset + 1, self.scrollOffset + self.textLabel.w)
+        end
+    else
+        -- NOT FOCUSED: Hand control back to the Label for standard marquee
+        local baseText = #rawText == 0 and self.placeholder or rawText
+        if self.masked and not self.isUnmasked and #rawText > 0 then
+            baseText = (self.maskChar):rep(#rawText)
         end
 
-        self.textLabel.text = procText:sub(self.scrollOffset + 1, self.scrollOffset + self.textLabel.w)
+        self.textLabel.fg = (#rawText == 0) and colours.lightGrey or self.fg
+        self.textLabel.text = baseText
+        -- Enable scrolling. Label:update() only moves if text > width.
+        self.textLabel.scroll = true 
     end
 
     self.textLabel:render()
 
+    -- Render cursor only when focused
     if self.focused and self.showCursor then
         local relativePos = self.cursorIndex - self.scrollOffset
         if relativePos >= 0 and relativePos < self.textLabel.w then
@@ -95,9 +115,10 @@ function Input:render()
     if self.toggleBtn then self.toggleBtn:render() end
 end
 
---- Internal update loop for handling cursor blinking.
--- @internal
 function Input:update()
+    -- Always update the label so its internal marquee timer runs
+    self.textLabel:update()
+
     if self.focused then
         if os.clock() - self.cursorTimer > 0.5 then
             self.showCursor = not self.showCursor
