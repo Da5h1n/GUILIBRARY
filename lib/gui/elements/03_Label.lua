@@ -127,7 +127,7 @@ function Label:render()
         m.write(string.rep(" ", self.w))
     end
 
-    if self.scroll then
+    if self.scroll and #self.text > self.w then
         -- MARQUEE MODE: Treat text as a single line and apply movement offset
         local startY = 0
         if self.vAlign == "middle" then startY = math.floor((self.h - 1) / 2)
@@ -167,7 +167,9 @@ end
 
 --- Internal update loop for handling scrolling movement.
 function Label:update()
-    if not self.scroll then return end
+    if not self.scroll or #self.text <= self.w then
+        return
+    end
     if #self.text <= self.w then return end
     if os.clock() < self.pauseUntil then return end
 

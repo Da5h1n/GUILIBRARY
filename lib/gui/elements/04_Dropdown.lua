@@ -32,13 +32,13 @@ function Dropdown:new(opts)
     self.scrollDelay = opts.scrollDelay or 2.0
 
     self.headerLabel = GUI.newLabel({
-        mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
+        mon = self.mon, x = self.x + 2, y = self.y, w = self.w - 2, h = 1,
         text = "", align = "left", bg = self.bg, fg = self.fg,
         scroll = self.scroll, scrollSpeed = self.scrollSpeed, scrollDelay = self.scrollDelay
     })
 
     self.itemLabel = GUI.newLabel({
-        mon = self.mon, x = self.x, y = self.y, w = self.w, h = 1,
+        mon = self.mon, x = self.x + 2, y = self.y, w = self.w - 2, h = 1,
         text = "", align = "left",
         scroll = self.scroll, scrollSpeed = self.scrollSpeed, scrollDelay = self.scrollDelay
     })
@@ -50,24 +50,42 @@ function Dropdown:render()
     local m = self.mon
     local arrow = self.isOpen and "v" or ">"
     local selectedText = tostring(self.options[self.selected] or "None")
+    local headerBG = self.isOpen and self.bg_open or self.bg
 
-    self.headerLabel.text = arrow .. " " .. selectedText
-    self.headerLabel.bg = self.isOpen and self.bg_open or self.bg
+    m.setBackgroundColor(headerBG)
+    m.setTextColor(self.fg)
+    m.setCursorPos(self.x, self.y)
+    m.write(arrow .. "  ")
+
+    self.headerLabel.text = selectedText
+    self.headerLabel.bg = headerBG
+    self.headerLabel.fg = self.fg
     self.headerLabel:render()
 
     if self.isOpen then
         for i, option in ipairs(self.options) do
-            self.itemLabel.y = self.y + i
-            self.itemLabel.text = "  " .. tostring(option)
+            local rowY = self.y + i
+            local isSelected = (i == self.selected)
+            local rowBG = isSelected and self.bg_sel or self.bg_list
+            local rowFG = isSelected and self.fg_sel or self.fg_list
 
-            if i == self.selected then
-                self.itemLabel.bg, self.itemLabel.fg = self.bg_sel, self.fg_sel
-            else
-                self.itemLabel.bg, self.itemLabel.fg = self.bg_list, self.fg_list
-            end
-
+            m.setBackgroundColor(rowBG)
+            m.setCursorPos(self.x, rowY)
+            m.write("  ")
+            
+            self.itemLabel.y = rowY
+            self.itemLabel.text = tostring(option)
+            self.itemLabel.bg = rowBG
+            self.itemLabel.fg = rowFG
             self.itemLabel:render()
         end
+    end
+end
+
+function Dropdown:update()
+    self.headerLabel:update()
+    if self.isOpen then
+        self.itemLabel:update()
     end
 end
 
@@ -75,6 +93,8 @@ function Dropdown:click(x, y)
     if y == self.y then
         self.isOpen = not self.isOpen
         self.h = self.isOpen and self.expandedH or self.closedH
+
+        self.headerLabel.scrollOffset = 0
     elseif self.isOpen then
         local index = y - self.y
         if self.options[index] then
@@ -82,6 +102,7 @@ function Dropdown:click(x, y)
             self.isOpen = false
             self.h = self.closedH
             self.onSelect(self.options[index], index)
+            self.headerLabel.scrollOffset = 0
         end
     end
     if self.parentFrame then self.parentFrame:render(true) else self:render() end

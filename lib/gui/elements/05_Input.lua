@@ -12,8 +12,10 @@ function Input:new(opts)
     local self = GUI.UIElement.new(self, opts)
 
     self.h = opts.h or 1
-
     self.text = opts.text or ""
+    self.cursorIndex = #self.text
+    self.scrollOffset = 0
+
     self.maxLen = opts.maxLen or 20
     self.placeholder = opts.placeholder or "Type here..."
     self.onSubmit = opts.onSubmit or function(text) end
@@ -49,30 +51,47 @@ function Input:new(opts)
     return self
 end
 
+function Input:updateScroll()
+    local veiwW = self.textLabel.w
+
+    if self.cursorIndex - self.scrollOffset >= veiwW then
+        self.scrollOffset = self.cursorIndex - veiwW + 1
+    end
+
+    if self.cursorIndex < self.scrollOffset then
+        self.scrollOffset = self.cursorIndex
+    end
+end
+
 function Input:render()
     local m = self.mon
-    local displayText = self.text
+    self:updateScroll()
 
-    if #displayText == 0 then
+    local rawText = self.text
+    if #rawText == 0 and not self.focused then
         self.textLabel.fg = colours.lightGrey
         self.textLabel.text = self.placeholder
     else
         self.textLabel.fg = self.fg
+        local procText = rawText
         if self.masked and not self.isUnmasked then
-            self.textLabel.text = (self.maskChar):rep(#displayText)
-        else
-            self.textLabel.text = displayText
+            procText = (self.maskChar):rep(#rawText)
         end
+
+        self.textLabel.text = procText:sub(self.scrollOffset + 1, self.scrollOffset + self.textLabel.w)
     end
 
     self.textLabel:render()
 
-    if self.focused and self.showCursor and #self.text < self.textLabel.w then
-        m.setCursorPos(self.x + #self.text, self.y)
-        m.setTextColor(self.fg)
-        m.write(self.cursorChar)
+    if self.focused and self.showCursor then
+        local relativePos = self.cursorIndex - self.scrollOffset
+        if relativePos >= 0 and relativePos < self.textLabel.w then
+            m.setCursorPos(self.x + relativePos, self.y)
+            m.setTextColor(self.fg)
+            m.write(self.cursorChar)
+        end
     end
-    
+
     if self.toggleBtn then self.toggleBtn:render() end
 end
 
@@ -98,9 +117,12 @@ function Input:click(x, y)
         GUI.focusedElement.focused = false
         GUI.focusedElement:render()
     end
-
     GUI.focusedElement = self
     self.focused = true
+
+    local localX = x - self.x
+    self.cursorIndex = math.min(#self.text, self.scrollOffset + localX)
+
     self.cursorTimer = os.clock()
     self.showCursor = true
     self:render()
@@ -112,36 +134,57 @@ function Input:onType(event)
     local e = event[1]
 
     if e == "char" then
-        local char = event[2]
         if #self.text < self.maxLen then
-            self.text = self.text .. char
-            self.showCursor = true
+            -- Insert character at cursorIndex
+            local left = self.text:sub(1, self.cursorIndex)
+            local right = self.text:sub(self.cursorIndex + 1)
+            self.text = left .. event[2] .. right
+            self.cursorIndex = self.cursorIndex + 1
         end
 
     elseif e == "paste" then
-        local text = event[2]
-
-        if #self.text + #text <= self.maxLen then
-            self.text = self.text .. text
+        local pText = event[2]
+        if #self.text + #pText <= self.maxLen then
+            local left = self.text:sub(1, self.cursorIndex)
+            local right = self.text:sub(self.cursorIndex + 1)
+            self.text = left .. pText .. right
+            self.cursorIndex = self.cursorIndex + #pText
         end
 
     elseif e == "key" then
         local key = event[2]
         if key == keys.backspace then
-            if #self.text > 0 then
-                self.text = self.text:sub(1, -2)
-                self.showCursor = true
+            if self.cursorIndex > 0 then
+                local left = self.text:sub(1, self.cursorIndex - 1)
+                local right = self.text:sub(self.cursorIndex + 1)
+                self.text = left .. right
+                self.cursorIndex = self.cursorIndex - 1
             end
+        elseif key == keys.delete then
+            if self.cursorIndex < #self.text then
+                local left = self.text:sub(1, self.cursorIndex)
+                local right = self.text:sub(self.cursorIndex + 2)
+                self.text = left .. right
+            end
+        elseif key == keys.left then
+            self.cursorIndex = math.max(0, self.cursorIndex - 1)
+        elseif key == keys.right then
+            self.cursorIndex = math.min(#self.text, self.cursorIndex + 1)
+        elseif key == keys.home then
+            self.cursorIndex = 0
+        elseif key == keys["end"] then
+            self.cursorIndex = #self.text
         elseif key == keys.enter then
             self.focused = false
             GUI.focusedElement = nil
-            self.showCursor = false
             self:render()
             if self.onSubmit then self.onSubmit(self.text) end
             return
         end
     end
 
+    self.showCursor = true
+    self.cursorTimer = os.clock()
     self:render()
 end
 
